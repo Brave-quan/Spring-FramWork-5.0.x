@@ -54,16 +54,18 @@ pluginManagement {
 4.spring-beans.gradle：
 		先注释掉这行代码： compileGroovy.dependsOn = compileGroovy.taskDependencies.values - "compileJava"
 
-5.点击右上角刷新gradle的图标，开始重新构建
+5.cmd 项目目录执行：gradlew.bat :spring-oxm:compileTestJava
 
-6.spring-beans.gradle：
+6.点击右上角刷新gradle的图标，开始重新构建
+
+7.spring-beans.gradle：
   修改：
   def deps=compileGroovy.taskDependencies.immutableValues +compileGroovy.taskDependencies.mutableValues
   compileGroovy.dependsOn = deps - "compileJava"
   
-7. spring-core模块编译，点击gradle插件的spring-core模块下的Tasks下的build的build
+8. spring-core模块编译，点击gradle插件的spring-core模块下的Tasks下的build的build
 
-8.编译整个工程，点击gradle插件的父模块（root）Tasks下的build的build
+9.编译整个工程，点击gradle插件的父模块（root）Tasks下的build的build
   
   
   
