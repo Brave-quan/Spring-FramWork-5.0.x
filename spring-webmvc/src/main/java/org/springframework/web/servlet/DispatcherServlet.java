@@ -941,15 +941,36 @@ public class DispatcherServlet extends FrameworkServlet {
 	 * to find the first that supports the handler class.
 	 * <p>All HTTP methods are handled by this method. It's up to HandlerAdapters or handlers
 	 * themselves to decide which methods are acceptable.
+	 *
+	 * 通过实际分发给处理器。
+	 * 处理器将被通过按顺序应用servlet的处理程序映射来获得。
+	 * HandlerAdapter将被通过查询servlet安装的HandlerAdapter获得
+	 * 查找第一个支持处理器类的。
+	 * 所有HTTP方法都由此方法处理。这取决于HandlerAdapter或处理程序
+	 * 自行决定哪些方法是可接受的。
+	 *
 	 * @param request current HTTP request
 	 * @param response current HTTP response
 	 * @throws Exception in case of any kind of processing failure
 	 */
+
+	// 请求处理经过流程
 	protected void doDispatch(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		//HttpServletRequestImp  extends HttpServletRequest extends ServletRequest
+
 		HttpServletRequest processedRequest = request;
+		//ExecutionChain 执行链
 		HandlerExecutionChain mappedHandler = null;
+		//multipart 大部分的 请求 被解析   muti:多
 		boolean multipartRequestParsed = false;
 
+		/*
+		 * 异步
+		 * 	 *先看request对象里的attributes是否存在WebAsyncManager对象
+		 *有直接取，没有new一个之后再把这个对象put 到 attributes
+		 *最后返回
+		 * */
 		WebAsyncManager asyncManager = WebAsyncUtils.getAsyncManager(request);
 
 		try {

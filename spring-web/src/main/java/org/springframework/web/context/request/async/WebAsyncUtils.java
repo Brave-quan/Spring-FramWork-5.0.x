@@ -39,9 +39,43 @@ public abstract class WebAsyncUtils {
 	/**
 	 * Obtain the {@link WebAsyncManager} for the current request, or if not
 	 * found, create and associate it with the request.
+	 *
+	 * 获取当前请求的{@链接WebAsyncManager}，如果没有
+	 * 找到，创建并将其与请求关联。
+	 *
+	 *HttpServletRequestImp  extends  HttpServletRequest  extends ServletRequest
+	 *ServletRequestAttributeListener extends EventListener
+	 *ImmediateInstanceHandle<T>   implements   InstanceHandle<T>
+	 *
+	 * 先看request对象里的attributes是否存在WebAsyncManager对象
+	 * 有直接取，没有new一个WebAsyncManager对象之后，调用servletRequest.setAttribute方法
+	 * 把WebAsyncManager对象put进ManagedListener[K,V]数组，put结果返回WebAsyncManager对象，
+	 * 返回WebAsyncManager对象判断是否存在,存在就便利数组ManagedListener[]，
+	 * 循环调用ServletRequestAttributeListener.attributeReplaced 来通知服务请求的 属性的状态发生改变
+	 * 最后返回
+	 *
+	 *
+	 *调用HttpServletRequestImp的setAttribute方法，
+	 * 如果没有对象是null，就removeAttribute，
+	 * ServletRequestAttributeListener中有ManagedListener[]数组
+	 *
+	 * ManagedListener.instance()
+	 * ManagedListener中有 InstanceHandle<? extends EventListener> handle
+	 * 不存在就调用 ManagedListener.start()构造
+	 * 存在实现类ImmediateInstanceHandle.getInstance()返回EventListener对象（强转ServletRequestAttributeListener）
+	 *
+	 *
+	 * ServletRequestAttributeListener.attributeReplaced   接收 ServletRequest 上的属性已被替换的通知。
+	 * ServletRequestAttributeListener用于 创建实现类 来通知服务请求的 属性的状态发生改变
+	 *
+
+	 *
+	 *
 	 */
 	public static WebAsyncManager getAsyncManager(ServletRequest servletRequest) {
 		WebAsyncManager asyncManager = null;
+
+		// HttpServletRequestImpl下的 Map<String, Object> attribute
 		Object asyncManagerAttr = servletRequest.getAttribute(WEB_ASYNC_MANAGER_ATTRIBUTE);
 		if (asyncManagerAttr instanceof WebAsyncManager) {
 			asyncManager = (WebAsyncManager) asyncManagerAttr;
