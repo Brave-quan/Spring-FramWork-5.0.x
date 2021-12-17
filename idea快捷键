@@ -1,0 +1,19 @@
+Ctrl+/或Ctrl+Shift+/      注释（//或者/**/）
+Ctrl+Alt+O            优化导入的类和包
+Ctrl+Alt+V            可以引入变量。例如：new String(); 自动导入变量定义。
+Ctrl+Alt+T        可以把代码包在一个块内，例如：try/catch。
+Ctrl + O	        选择可重写的方法
+Ctrl + I	        选择可继承的方法
+Ctrl + Enter      智能分隔行
+Ctrl + H          查看类的继承体系
+Ctrl +Alt+H       查看方法的调用层级
+Ctrl +Alt+u       当前标签页浮动显示一个图层
+Ctrl +Alt+Shift+u 查看类UML图
+
+
+Ctrl + Shift + Enter	自动结束代码，行末自动添加分号 （必备）
+Ctrl + Shift + U	    对选中的代码进行大 / 小写轮流转换 （必备）
+
+Alt+Shift+F8        强制步过
+Alt+Shift+F7        强制步入
+Alt+F8              Debug时修改变量
