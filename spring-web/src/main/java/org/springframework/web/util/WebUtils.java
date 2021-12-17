@@ -50,6 +50,10 @@ import org.springframework.util.StringUtils;
  * Miscellaneous utilities for web applications.
  * Used by various framework classes.
  *
+ *Web应用程序的工具类。
+ *由各种框架类使用。
+ *
+ *
  * @author Rod Johnson
  * @author Juergen Hoeller
  * @author Sebastien Deleuze
@@ -380,6 +384,11 @@ public abstract class WebUtils {
 	 * @param requiredType the desired type of request object
 	 * @return the matching request object, or {@code null} if none
 	 * of that type is available
+	 *
+	 *
+	 * 指定类型如果是ServletRequest的实现类，就强转request指定类型返回
+	 * 否则就强转ServletRequestWrapper，返回ServletRequestWrapper对象
+	 *
 	 */
 	@SuppressWarnings("unchecked")
 	@Nullable
