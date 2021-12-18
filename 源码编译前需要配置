@@ -1,4 +1,6 @@
-可以参考： https://blog.csdn.net/foxException/article/details/108334235
+可以参考： 
+优先 https://blog.csdn.net/foxException/article/details/108334235
+https://www.cnblogs.com/huangxiufen/p/15003428.html
 
 1.gradle/wrapper/gradle-wrapper.properties：
 修改 distributionUrl=file\:///D:/Spring/gradle-4.9-bin.zip
