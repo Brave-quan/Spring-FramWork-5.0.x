@@ -43,7 +43,7 @@ public class UrlPathHelperTests {
 
 	@Test
 	public void getPathWithinApplication() {
-		request.setContextPath("/petclinic");
+		request.setContextPath("/petclinic/welcome.html");
 		request.setRequestURI("/petclinic/welcome.html");
 
 		assertEquals("Incorrect path returned", "/welcome.html", helper.getPathWithinApplication(request));
@@ -89,7 +89,7 @@ public class UrlPathHelperTests {
 	@Test
 	public void getPathWithinServletWithoutUrlDecoding() {
 		request.setContextPath("/SPR-11101");
-		request.setServletPath("/test_url_decoding/a/b");
+		// request.setServletPath("/test_url_decoding/a/b");
 		request.setRequestURI("/test_url_decoding/a%2Fb");
 
 		helper.setUrlDecode(false);

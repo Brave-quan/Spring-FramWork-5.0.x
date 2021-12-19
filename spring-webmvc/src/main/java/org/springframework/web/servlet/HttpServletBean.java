@@ -81,7 +81,10 @@ import org.springframework.web.context.support.StandardServletEnvironment;
 @SuppressWarnings("serial")
 public abstract class HttpServletBean extends HttpServlet implements EnvironmentCapable, EnvironmentAware {
 
-	/** Logger available to subclasses */
+	/**
+	 * Logger available to subclasses 子类
+	 * 可用于子类的日志记录器
+	 */
 	protected final Log logger = LogFactory.getLog(getClass());
 
 	@Nullable
@@ -159,8 +162,7 @@ public abstract class HttpServletBean extends HttpServlet implements Environment
 				bw.registerCustomEditor(Resource.class, new ResourceEditor(resourceLoader, getEnvironment()));
 				initBeanWrapper(bw);
 				bw.setPropertyValues(pvs, true);
-			}
-			catch (BeansException ex) {
+			} catch (BeansException ex) {
 				if (logger.isErrorEnabled()) {
 					logger.error("Failed to set bean properties on servlet '" + getServletName() + "'", ex);
 				}

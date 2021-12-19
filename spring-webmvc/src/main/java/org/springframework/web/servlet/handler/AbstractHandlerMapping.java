@@ -56,7 +56,6 @@ import org.springframework.web.util.UrlPathHelper;
  *
  * @author Juergen Hoeller
  * @author Rossen Stoyanchev
- * @since 07.04.2003
  * @see #getHandlerInternal
  * @see #setDefaultHandler
  * @see #setAlwaysUseFullPath
@@ -64,6 +63,7 @@ import org.springframework.web.util.UrlPathHelper;
  * @see org.springframework.util.AntPathMatcher
  * @see #setInterceptors
  * @see org.springframework.web.servlet.HandlerInterceptor
+ * @since 07.04.2003
  */
 public abstract class AbstractHandlerMapping extends WebApplicationObjectSupport implements HandlerMapping, Ordered {
 
@@ -105,6 +105,7 @@ public abstract class AbstractHandlerMapping extends WebApplicationObjectSupport
 
 	/**
 	 * Shortcut to same property on underlying {@link #setUrlPathHelper UrlPathHelper}.
+	 *
 	 * @see org.springframework.web.util.UrlPathHelper#setAlwaysUseFullPath(boolean)
 	 */
 	public void setAlwaysUseFullPath(boolean alwaysUseFullPath) {
@@ -163,6 +164,10 @@ public abstract class AbstractHandlerMapping extends WebApplicationObjectSupport
 	/**
 	 * Return the PathMatcher implementation to use for matching URL paths
 	 * against registered URL patterns.
+	 *
+	 * 返回PathMatcher实现，来匹配URL路径
+	 * 对注册的URL模式。
+	 *
 	 */
 	public PathMatcher getPathMatcher() {
 		return this.pathMatcher;
@@ -302,11 +307,9 @@ public abstract class AbstractHandlerMapping extends WebApplicationObjectSupport
 	protected HandlerInterceptor adaptInterceptor(Object interceptor) {
 		if (interceptor instanceof HandlerInterceptor) {
 			return (HandlerInterceptor) interceptor;
-		}
-		else if (interceptor instanceof WebRequestInterceptor) {
+		} else if (interceptor instanceof WebRequestInterceptor) {
 			return new WebRequestHandlerInterceptorAdapter((WebRequestInterceptor) interceptor);
-		}
-		else {
+		} else {
 			throw new IllegalArgumentException("Interceptor type not supported: " + interceptor.getClass().getName());
 		}
 	}
@@ -341,6 +344,8 @@ public abstract class AbstractHandlerMapping extends WebApplicationObjectSupport
 	/**
 	 * Look up a handler for the given request, falling back to the default
 	 * handler if no specific one is found.
+	 * <p>
+	 * 寻找给定请求的处理器，如果没有找到特别的处理器，就返回默认的处理器
 	 * @param request current HTTP request
 	 * @return the corresponding handler instance, or the default handler
 	 * @see #getHandlerInternal
@@ -348,7 +353,9 @@ public abstract class AbstractHandlerMapping extends WebApplicationObjectSupport
 	@Override
 	@Nullable
 	public final HandlerExecutionChain getHandler(HttpServletRequest request) throws Exception {
+
 		Object handler = getHandlerInternal(request);
+
 		if (handler == null) {
 			handler = getDefaultHandler();
 		}
@@ -404,7 +411,7 @@ public abstract class AbstractHandlerMapping extends WebApplicationObjectSupport
 	 * or extending the existing chain.
 	 * <p>For simply adding an interceptor in a custom subclass, consider calling
 	 * {@code super.getHandlerExecutionChain(handler, request)} and invoking
-	 * {@link HandlerExecutionChain#addInterceptor} on the returned chain object.
+	 * {@link HandlerExecutionChain #addInterceptor} on the returned chain object.
 	 * @param handler the resolved handler instance (never {@code null})
 	 * @param request current HTTP request
 	 * @return the HandlerExecutionChain (never {@code null})
@@ -421,8 +428,7 @@ public abstract class AbstractHandlerMapping extends WebApplicationObjectSupport
 				if (mappedInterceptor.matches(lookupPath, this.pathMatcher)) {
 					chain.addInterceptor(mappedInterceptor.getInterceptor());
 				}
-			}
-			else {
+			} else {
 				chain.addInterceptor(interceptor);
 			}
 		}
@@ -456,18 +462,17 @@ public abstract class AbstractHandlerMapping extends WebApplicationObjectSupport
 	 * <p>For actual requests, the default implementation inserts a
 	 * HandlerInterceptor that makes CORS-related checks and adds CORS headers.
 	 * @param request the current request
-	 * @param chain the handler chain
-	 * @param config the applicable CORS configuration (possibly {@code null})
+	 * @param chain   the handler chain
+	 * @param config  the applicable CORS configuration (possibly {@code null})
 	 * @since 4.2
 	 */
 	protected HandlerExecutionChain getCorsHandlerExecutionChain(HttpServletRequest request,
-			HandlerExecutionChain chain, @Nullable CorsConfiguration config) {
+																 HandlerExecutionChain chain, @Nullable CorsConfiguration config) {
 
 		if (CorsUtils.isPreFlightRequest(request)) {
 			HandlerInterceptor[] interceptors = chain.getInterceptors();
 			return new HandlerExecutionChain(new PreFlightHandler(config), interceptors);
-		}
-		else {
+		} else {
 			chain.addInterceptor(new CorsInterceptor(config));
 			return chain;
 		}

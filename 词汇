@@ -2,16 +2,33 @@ inherited  		   adj.遗传的；继承的
 configurable     可配置的
 process 	       n.过程；进程；程序；
 	               vt 使走程序；处理；加工；起诉
+
 dispatch   		   n.电讯；新闻报道；通讯；急件；快信；发送；发出；
 	               vt.发送；发出；派遣；派出；迅速处理；
+
 actual   	       真实的；实际的；真实的；事实上的；真正的；
 Adapter		       适配器
 obtained 		     获得
 attribute        n.(人或物的）特征，特性，属性；
-volatile		     adj.易变的；反复无常的；易变的；
-resolver		     解析器
+volatile		   adj.易变的；反复无常的；易变的；
+resolver		   解析器
 available        可用
 Utility          功能，用途
 determine 	     vt.决定；决意；查明；影响；
-whether 		     是否
+whether 		   是否
 content		       内容
+subclass           子类
+generic            通用的，一般的
+trace              跟踪
+enabled            启用；使能够；批准
+specific           adj.明确的，具体的；特定的；特有的，独特的；
+Detect              v. 查明，察觉；测出，检测，
+decode             vt. 解码，破译；转换；译解，
+Attachment          附件
+Sanitize            清理
+Direct             adj.直接的；笔直的；直射的；正好的；
+validate            v. 批准，确认……有效；证实，确认；使生效
+obtain              v. （尤指通过艰难的过程）得到，获得；
+raw                 adj. （信息）未经处理的，原始的；生的，未煮过的；天然的，未经加工的；
+expose              公开，暴露
+Pattern             n. 模式，方式；图案，花样；模范，典范；模型，

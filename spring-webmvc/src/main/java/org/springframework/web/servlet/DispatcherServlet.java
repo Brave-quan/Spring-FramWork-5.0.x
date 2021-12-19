@@ -962,7 +962,7 @@ public class DispatcherServlet extends FrameworkServlet {
 		HttpServletRequest processedRequest = request;
 		//ExecutionChain 执行链
 		HandlerExecutionChain mappedHandler = null;
-		//multipart 大部分的 请求 被解析   muti:多
+		//multipart 数据块 请求 被解析   muti:多
 		boolean multipartRequestParsed = false;
 
 		/*
@@ -979,9 +979,12 @@ public class DispatcherServlet extends FrameworkServlet {
 
 			try {
 				processedRequest = checkMultipart(request);
+
+				//数据块请求是否 被解析
 				multipartRequestParsed = (processedRequest != request);
 
 				// Determine handler for the current request.
+				//确定 当前请求的 处理器
 				mappedHandler = getHandler(processedRequest);
 				if (mappedHandler == null) {
 					noHandlerFound(processedRequest, response);
@@ -1197,15 +1200,41 @@ public class DispatcherServlet extends FrameworkServlet {
 	 * <p>Tries all handler mappings in order.
 	 * @param request current HTTP request
 	 * @return the HandlerExecutionChain, or {@code null} if no handler could be found
+	 *
+	 * 返回这个请求的HandlerExecutionChain。
+	 * 按顺序尝试所有处理程序映射。
+	 * @param request 当前http请求
+	 * @return 返回处理器执行链，或者null
+	 *
+	 * HandlerExecutionChain处理器执行链
+	 *
 	 */
 	@Nullable
 	protected HandlerExecutionChain getHandler(HttpServletRequest request) throws Exception {
+		//处理器映射数组不为空
 		if (this.handlerMappings != null) {
+		//遍历处理器映射数组
 			for (HandlerMapping hm : this.handlerMappings) {
+
+				/*
+				* DispatchServlet是HttpServletBean的间接子类
+				* logger是HttpServletBean的protected的 attribute（属性）
+				*
+				* isTraceEnabled  是否能够被跟踪
+				* */
 				if (logger.isTraceEnabled()) {
 					logger.trace(
+							// 测试处理器匹配到在DispatcherServlet对象中名为XX的 XX处理器对象
 							"Testing handler map [" + hm + "] in DispatcherServlet with name '" + getServletName() + "'");
 				}
+				/*
+				* getHandler()是HandleMapping接口定义方法
+				* AbstractHandleMapping抽象类重写的final方法，此方法不能被重写
+				* RequestMappingHandlerMapping间接实现HandleMapping接口
+				* RequestMappingHandlerMapping间接继承AbstractHandleMapping
+				*
+				* 此方法，寻找给定请求的处理器，如果没有找到具体的处理器，就返回默认的处理器
+				* */
 				HandlerExecutionChain handler = hm.getHandler(request);
 				if (handler != null) {
 					return handler;

@@ -60,6 +60,14 @@ import org.springframework.web.context.support.ServletContextResourcePatternReso
  * managed by an {@link ApplicationContext}. Just a simple lookup into a
  * {@link StaticListableBeanFactory}.
  *
+ * 一个接受对象实例注册的存根WebApplicationContext。
+ *
+ * 注册对象实例在外部实例化和初始化时，
+ * *没有连接，bean初始化，生命周期事件，以及没有
+ * 预处理和后处理钩子通常与bean相关
+ * 由{@link ApplicationContext}管理。只是一个简单的查找
+ * {@link StaticListableBeanFactory}。
+ *
  * @author Rossen Stoyanchev
  * @author Juergen Hoeller
  * @since 3.2

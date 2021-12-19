@@ -184,6 +184,8 @@ public class AntPathMatcher implements PathMatcher {
 
 	/**
 	 * Actually match the given {@code path} against the given {@code pattern}.
+	 *
+	 * 实际对模式的匹配的路径
 	 * @param pattern the pattern to match against
 	 * @param path the path String to test
 	 * @param fullMatch whether a full pattern match is required (else a pattern match
