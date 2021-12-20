@@ -43,7 +43,7 @@ public class UrlPathHelperTests {
 
 	@Test
 	public void getPathWithinApplication() {
-		request.setContextPath("/petclinic/welcome.html");
+		request.setContextPath("/petclinic");
 		request.setRequestURI("/petclinic/welcome.html");
 
 		assertEquals("Incorrect path returned", "/welcome.html", helper.getPathWithinApplication(request));
