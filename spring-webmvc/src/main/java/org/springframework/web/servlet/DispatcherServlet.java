@@ -974,10 +974,14 @@ public class DispatcherServlet extends FrameworkServlet {
 		WebAsyncManager asyncManager = WebAsyncUtils.getAsyncManager(request);
 
 		try {
+
+			//定义ModelAndView
 			ModelAndView mv = null;
+			//定义请求发生异常
 			Exception dispatchException = null;
 
 			try {
+				//检验请求是不是多数据块
 				processedRequest = checkMultipart(request);
 
 				//数据块请求是否 被解析
@@ -1133,22 +1137,40 @@ public class DispatcherServlet extends FrameworkServlet {
 	/**
 	 * Convert the request into a multipart request, and make multipart resolver available.
 	 * <p>If no multipart resolver is set, simply use the existing request.
+	 *
 	 * @param request current HTTP request
+	 * @param request 当前HTTP请求
 	 * @return the processed request (multipart wrapper if necessary)
+	 * @返回处理过的请求（如有必要，多部分包装器）
+	 * @参见多部分解析器#解析多部分
 	 * @see MultipartResolver#resolveMultipart
+	 *
+	 *
+	 * <p>
+	 * 将请求转换为多数据块请求，并使多数据块解析器可用。
+	 * <p>如果未设置多数据块解析器，只需使用现有请求。
 	 */
 	protected HttpServletRequest checkMultipart(HttpServletRequest request) throws MultipartException {
+		// 用解析器检验请求的ContentType是不是以  "multipart/"开头，
+		//但request不一定是MultipartHttpServletRequest对象
 		if (this.multipartResolver != null && this.multipartResolver.isMultipart(request)) {
+			//检验request是不是MultipartHttpServletRequest的类的实例(或其任何子类)
 			if (WebUtils.getNativeRequest(request, MultipartHttpServletRequest.class) != null) {
+				// "请求已经是MultipartHttpServletRequest -如果不是在转发中，
+				//这通常是由web.xml中的额外的多数据块拦截 产生的"
 				logger.debug("Request is already a MultipartHttpServletRequest - if not in a forward, " +
 						"this typically results from an additional MultipartFilter in web.xml");
 			}
+			// 检验否是MultipartException对象或者子类引用指向父类对象
 			else if (hasMultipartException(request)) {
+				//当前请求的多数据块解析已经失败-"
+				// "跳过重新解析以实现未受干扰的错误渲染
 				logger.debug("Multipart resolution previously failed for current request - " +
 						"skipping re-resolution for undisturbed error rendering");
 			}
 			else {
 				try {
+					//多数据块解析器解析数据块
 					return this.multipartResolver.resolveMultipart(request);
 				}
 				catch (MultipartException ex) {
@@ -1168,13 +1190,22 @@ public class DispatcherServlet extends FrameworkServlet {
 
 	/**
 	 * Check "javax.servlet.error.exception" attribute for a multipart exception.
+	 *
+	 * 检验是否MultipartException
+	 *
+	 * HttpServletRequestImp implements  HttpServletRequest extends ServletRequest
+	 * getAttribute()方法是获取 HttpServletRequestImp的Map<String, Object> attributes的Value
 	 */
 	private boolean hasMultipartException(HttpServletRequest request) {
+		//顶级异常
 		Throwable error = (Throwable) request.getAttribute(WebUtils.ERROR_EXCEPTION_ATTRIBUTE);
+
 		while (error != null) {
+			//判断是否是MultipartException对象或者子类引用指向父类对象
 			if (error instanceof MultipartException) {
 				return true;
 			}
+			//不是就返回这个异常对象
 			error = error.getCause();
 		}
 		return false;

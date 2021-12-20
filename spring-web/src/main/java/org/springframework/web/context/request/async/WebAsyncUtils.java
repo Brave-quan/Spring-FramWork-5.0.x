@@ -68,9 +68,6 @@ public abstract class WebAsyncUtils {
 	 * ServletRequestAttributeListener.attributeReplaced   接收 ServletRequest 上的属性已被替换的通知。
 	 * ServletRequestAttributeListener用于 创建实现类 来通知服务请求的 属性的状态发生改变
 	 *
-
-	 *
-	 *
 	 */
 	public static WebAsyncManager getAsyncManager(ServletRequest servletRequest) {
 		WebAsyncManager asyncManager = null;
